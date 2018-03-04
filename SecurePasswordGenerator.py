@@ -3,7 +3,7 @@ from base64 import b64encode
 from os import urandom
 import datetime as dt
 import sys
-
+import gc
 
 class PwdGen:
 	hashDict = ('abcdefghijklmnopqrstuvwyz'
@@ -80,9 +80,11 @@ class PwdGen:
 		print("[1%]:Task - Hashing")
 		for x in range(1, self.workFactor):
 			hashedString = self.getSHA512(hashedString, b64encode(urandom(64)).decode('utf-8'))
-			print("[{}%]:Task - {}".format((int)(((float)(x + 1) / self.workFactor) * 100), "Hashing..."))
+			print("[{}%]:Task - {}".format((int)(((float)(x + 1) / self.workFactor) * 100), "Cycle:{}".format(x+1)))
 
 		b74String = self.getBase74(hashedString, self.hashDict)
+
+		del hashedString, self.hashDict, self.masterKey
 		return b74String
 
 	def getSHA512(self, rawPassword, salt):
@@ -98,6 +100,7 @@ class PwdGen:
 			num, idx = divmod(num, num_chars)
 			chars.append(base74Val[idx])
 
+		del num, num_chars
 		return ''.join(chars)
 
 
@@ -109,6 +112,9 @@ def main():
 	endTime = dt.datetime.now()
 	print("Total Time: {}".format(endTime - startTime))
 
+	del generatedPassword
+	del endTime, startTime
+	gc.collect()
 
 if __name__ == "__main__":
 	main()
