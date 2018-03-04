@@ -4,7 +4,8 @@ An easy to use python 3 password generator.
 ## Usage
 1) Run the script using python 3.
 2) Enter an iteration value (500 - 500,000). This value determines how random the generated output is.
-   Please note that higher iteration values require more processing time.
+   Please note that higher iteration values require more processing time. 
+   You can use values higher than 500,000 but it is not recommended.
 3) Enter an output password length (5 - 50). This value determines how long the generated output is.
 4) Complete the prompt asking about including special characters in the generated password (Y - yes, N - no).
 5) The script will now run and generate a secure password.
